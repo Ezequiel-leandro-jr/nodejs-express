@@ -22,7 +22,9 @@ Content-Type: application/json
     "titulo": 'Pulando Amarelinha',
     "autor": 'Xuxa e Xaxa'
 }
-    
+
+//tem que colocar "Content- Type: application/json" pra indicar o tipo de conteúdo que tá sendo adcionado ao JSON. No caso
+//é o conteúdo do livro "Pulando Amarelinha" com o autor.  
 
 ###
 
