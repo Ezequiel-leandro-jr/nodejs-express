@@ -1,0 +1,11 @@
+//para testar rotas distintas, divide as requisições com ###
+//lembre que, para testar qualquer rota, você deve dar ctrl + c no terminal p/ parar o servidor e, então, inicia-lo
+//com ts-node app.js e enfim fazer o request
+
+
+GET http://localhost:3000/livros
+
+###
+
+GET http://localhost:3000/livros/:id
+
