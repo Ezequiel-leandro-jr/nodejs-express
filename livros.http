@@ -9,3 +9,36 @@ GET http://localhost:3000/livros
 
 GET http://localhost:3000/livros/:id
 
+###
+
+GET http://localhost:3000/livros/2
+
+###
+
+POST http://localhost:3000/livros/
+Content-Type: application/json
+
+{
+    "titulo": 'Pulando Amarelinha',
+    "autor": 'Xuxa e Xaxa'
+}
+    
+
+###
+
+PUT http://localhost:3000/livros/4
+Content-Type: application/json
+
+{
+    "titulo": 'Jogando queimada',
+    "autor": 'Tico e Teco'
+}
+
+###
+
+DELETE http://localhost:3000/livros/4
+
+
+
+
+

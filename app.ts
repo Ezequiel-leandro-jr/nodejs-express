@@ -20,7 +20,7 @@ app.listen(porta, () => {
 });
 
 //array para simular um banco de dados simples
-const livros = [
+let livros = [
 
     { id: 1, titulo: "Aprendendo TypeScript", autor: "John Doe" },
     
@@ -95,4 +95,13 @@ app.put("/livros/:id", (req: Request, res: Response) => {
     
     res.json(livros[livroIndex]);
     
+    });
+
+//DELETE - Rota para excluir um livro pelo ID:
+app.delete("/livros/:id", (req: Request, res: Response) => {
+
+    livros = livros.filter((l) => l.id !== parseInt(req.params.id));
+        
+    res.json({ mensagem: "Livro removido com sucesso" });
+        
     });
