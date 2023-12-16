@@ -3,28 +3,31 @@ import bodyParser from "body-parser";
 
 const app = express();
 
+// Adicionando o middleware BodyParser para processamento dos dados do corpo da solicitação
 app.use(bodyParser.json());
 
+//rota raiz
 app.get("/", (req: Request, res: Response) => {
 
-    res.send("Bem-vindo ao meu servidor!");
+    res.send("Esta é a página inicial do servidor!");
 
 });
 
-const porta: number = 3000;
+const porta: number = 3003;
 
+//iniciando o servidor
 app.listen(porta, () => {
 
     console.log(`Servidor rodando em http://localhost:${porta}`);
 
 });
 
-//array para simular um banco de dados simples
-let livros = [
+//array para simular um banco de dados simples, com os usuários
+let usuarios = [
 
-    { id: 1, titulo: "Aprendendo TypeScript", autor: "John Doe" },
+    { id: 1, nome: "Son Goku", raca: "Saiyajin" },
     
-    { id: 2, titulo: "Node.js para Iniciantes", autor: "Jane Smith" },
+    { id: 2, nome: "Dendê", raca: "Namekuseijin" },
     
     ];
 
@@ -32,76 +35,53 @@ let livros = [
                  //IMPLEMENTAÇÃO CRUD//
 
 //GET - rotas para obter todos os livros
-app.get("/livros", (req: Request, res: Response) => {
+app.get("/usuarios", (req: Request, res: Response) => {
 
-    res.send(livros);
+    res.send(usuarios);
     
     });
 
 //GET - Rota para obter um livro pelo ID:
-app.get("/livros/:id", (req: Request, res: Response) => {
+app.get("/usuarios/:id", (req: Request, res: Response) => {
 
-    const livro = livros.find((l) => l.id === parseInt(req.params.id));
+    const usuario = usuarios.find((l) => l.id === parseInt(req.params.id));
     
-    if (!livro) {
+    if (!usuario) {
     
-    return res.status(404).json({ mensagem: "Livro não encontrado" });
+    return res.status(404).json({ mensagem: "Usuário não encontrado" });
     
     }
     
-    res.send(livro);
+    res.send(usuario);
     
     });
 
 //POST - Rota para adicionar um novo livro:
-app.post("/livros", (req: Request, res: Response) => {
+app.post("/usuarios", (req: Request, res: Response) => {
 
-    const novoLivro = {
+    const novoUsuario = {
     
-    id: livros.length + 1,
+    id: usuarios.length + 1,
     
-    titulo: req.body.titulo,
+    nome: req.body.nome,
     
-    autor: req.body.autor,
+    raca: req.body.raca,
     
     };
     
-    livros.push(novoLivro);
-    
-    res.status(201).json(novoLivro);
-    
-    });
+    if (novoUsuario && novoUsuario.nome) {
+        novoUsuario.id = usuarios.length + 1;
+        usuarios.push(novoUsuario);
 
-//PUT - Rota para atualizar um livro pelo ID:
-app.put("/livros/:id", (req: Request, res: Response) => {
-
-    const livroIndex = livros.findIndex((l) => l.id === parseInt(req.params.id));
-    
-    if (livroIndex === -1) {
-    
-    return res.status(404).json({ mensagem: "Livro não encontrado" });
-    
+        res.status(201).json({ mensagem: 'Usuário adicionado com sucesso!' });
+    } else {
+        res.status(400).json({ mensagem: 'Dados inválidos para adicionar usuário!' });
     }
     
-    livros[livroIndex] = {
-    
-    id: livros[livroIndex].id,
-    
-    titulo: req.body.titulo,
-    
-    autor: req.body.autor,
-    
-    };
-    
-    res.json(livros[livroIndex]);
-    
     });
 
-//DELETE - Rota para excluir um livro pelo ID:
-app.delete("/livros/:id", (req: Request, res: Response) => {
-
-    livros = livros.filter((l) => l.id !== parseInt(req.params.id));
-        
-    res.json({ mensagem: "Livro removido com sucesso" });
-        
-    });
+//GET - Rota para saudação personalizada:
+app.get('/saudacao/:nome', (req, res) => {
+    const nome = req.params.nome;
+    res.json({ mensagem: `Olá, ${nome}! Bem-vindo ao meu servidor!` });
+});
